@@ -50,12 +50,6 @@
       "type": "string",
       "required": true
     },
-    "domain": {
-      "type": "relation",
-      "relation": "manyToOne",
-      "target": "api::domain.domain",
-      "inversedBy": "modpacks"
-    },
     "priority": {
       "type": "integer",
       "required": true,
@@ -79,6 +73,12 @@
       "type": "boolean",
       "default": false,
       "required": true
+    },
+    "domain": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::domain.domain",
+      "inversedBy": "modpacks"
     }
   }
 }

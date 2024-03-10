@@ -21,19 +21,11 @@
     "depotUrl": {
       "type": "string"
     },
-    "newsUrl": {
-      "type": "string"
-    },
     "modpacks": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::modpack.modpack",
       "mappedBy": "domain"
-    },
-    "minimumVersion": {
-      "type": "integer",
-      "required": true,
-      "default": 1
     }
   }
 }

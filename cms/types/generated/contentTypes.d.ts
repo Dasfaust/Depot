@@ -798,15 +798,11 @@ export interface ApiDomainDomain extends Schema.CollectionType {
     name: Attribute.String;
     discordLink: Attribute.String;
     depotUrl: Attribute.String;
-    newsUrl: Attribute.String;
     modpacks: Attribute.Relation<
       'api::domain.domain',
       'oneToMany',
       'api::modpack.modpack'
     >;
-    minimumVersion: Attribute.Integer &
-      Attribute.Required &
-      Attribute.DefaultTo<1>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -927,11 +923,6 @@ export interface ApiModpackModpack extends Schema.CollectionType {
       Attribute.DefaultTo<25565>;
     icon: Attribute.Media & Attribute.Required;
     discordChangelogChannelId: Attribute.String & Attribute.Required;
-    domain: Attribute.Relation<
-      'api::modpack.modpack',
-      'manyToOne',
-      'api::domain.domain'
-    >;
     priority: Attribute.Integer & Attribute.Required & Attribute.DefaultTo<1>;
     discordChatChannelId: Attribute.String & Attribute.Required;
     discordInfoChannelId: Attribute.String & Attribute.Required;
@@ -943,6 +934,11 @@ export interface ApiModpackModpack extends Schema.CollectionType {
     isPreview: Attribute.Boolean &
       Attribute.Required &
       Attribute.DefaultTo<false>;
+    domain: Attribute.Relation<
+      'api::modpack.modpack',
+      'manyToOne',
+      'api::domain.domain'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

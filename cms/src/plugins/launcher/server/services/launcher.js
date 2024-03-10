@@ -1,5 +1,6 @@
 'use strict';
 
+const axios = require("axios");
 const { errors } = require('@strapi/utils');
 const { NotFoundError } = errors;
 
@@ -41,15 +42,6 @@ module.exports = ({ strapi }) => ({
   },
 
   async packages(query) {
-    // TODO: check and integrate domain functionality
-
-    var protocol4 = false;
-    if ("protocol" in query) {
-      if (query.protocol >= 4) {
-        protocol4 = true;
-      }
-    }
-
     var result = await strapi.entityService.findMany("api::launcher.launcher", {
       fields: ["minimumVersion"]
     });
@@ -58,7 +50,7 @@ module.exports = ({ strapi }) => ({
 
     var modpackQuery = {
       fields: ["name", "title", "priority"],
-      populate: { versions: { fields: ["version"], sort: ["id:desc"] } }
+      populate: { icon: {}, domain: {}, versions: { fields: ["version"], sort: ["id:desc"] } }
     }
     if (!wantsPreview) {
       var previewFilter = { isPreview: { $eq: false } }
@@ -66,27 +58,42 @@ module.exports = ({ strapi }) => ({
       modpackQuery.populate.versions.filters = previewFilter;
     }
 
-    if (protocol4) {
-      modpackQuery.populate.icon = {}
-    }
-
     result.packages = await strapi.entityService.findMany("api::modpack.modpack", modpackQuery);
 
     result.packages.map((pkg) => {
       if ("versions" in pkg) {
         pkg.version = pkg.versions[0].version;
-        pkg.location = "/launcher/packages/" + pkg.name + "/" + pkg.version;
+        pkg.location = `/launcher/packages/${pkg.name}/${pkg.version}`;
+        pkg.domainName = pkg.domain.name;
+        delete pkg.domain;
+        pkg.newsUrl = `${process.env.NEWS_URL}/${pkg.name}`;
       }
 
-      if (protocol4) {
-        var iconUrl = process.env.BASE_URL + pkg.icon.url;
-        pkg.iconUrl = iconUrl;
-        delete pkg.icon;
-      }
+      var iconUrl = process.env.BASE_URL + pkg.icon.url;
+      pkg.iconUrl = iconUrl;
+      delete pkg.icon;
 
       delete pkg.versions;
       delete pkg.id;
     });
+
+    var domains = await strapi.entityService.findMany("api::domain.domain", {
+      filters: { depotUrl: { $ne: process.env.BASE_URL } }
+    });
+
+    for (var domain of domains) {
+      try {
+        var preview = wantsPreview ? "preview" : "";
+        var domainResult = await axios.get(`${domain.depotUrl}/launcher/packages?key=${preview}`);
+        domainResult.data.packages.map((pkg) => {
+          pkg.location = `${domain.depotUrl}${pkg.location}`;
+          result.packages.push(pkg);
+        });
+      } catch(axError) {
+        console.log(`Error getting packages from domain ${domain.name}:`);
+        console.log(axError);
+      }
+    }
 
     if ("id" in result) {
       delete result.id;
@@ -156,7 +163,6 @@ module.exports = ({ strapi }) => ({
         version: data.version,
         gameVersion: data.gameVersion,
         isPreview: data.preview,
-        heapValue: 1,
         features: data.features,
         tasks: data.tasks,
         versionManifest: data.versionManifest,

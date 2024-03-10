@@ -1,5 +1,5 @@
 # Depot
-Manage modpacks with Strapi. Depot is made for use with [my fork of SKCraft Launcher](https://github.com/Dasfaust/Launcher), but it's backwards compatible with the original branch!
+Manage modpacks with Strapi. Depot is made for use with [my fork of SKCraft Launcher](https://github.com/Dasfaust/Launcher).
 
 ## Features
 - Automatic package listing generation
