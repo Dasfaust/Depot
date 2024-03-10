@@ -8,6 +8,7 @@ module.exports = [
       auth: false
     },
   },
+
   {
     method: 'GET',
     path: '/latest',
@@ -17,6 +18,7 @@ module.exports = [
       auth: false
     },
   },
+
   {
     method: 'GET',
     path: '/packages',
@@ -26,6 +28,7 @@ module.exports = [
       auth: false
     },
   },
+
   {
     method: 'GET',
     path: '/packages/:name/:version',
@@ -35,6 +38,7 @@ module.exports = [
       auth: false
     },
   },
+
   {
     method: 'GET',
     path: '/domain/:name',
@@ -44,6 +48,7 @@ module.exports = [
       auth: false
     },
   },
+
   {
     method: 'GET',
     path: '/news',
@@ -53,6 +58,7 @@ module.exports = [
       auth: false
     },
   },
+
   {
     method: 'GET',
     path: '/news/:id',
@@ -62,6 +68,7 @@ module.exports = [
       auth: false
     },
   },
+
   {
     method: 'POST',
     path: '/create',
@@ -70,6 +77,7 @@ module.exports = [
       policies: []
     },
   },
+  
   {
     method: 'DELETE',
     path: '/delete/:id',

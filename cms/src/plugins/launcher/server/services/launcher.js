@@ -32,7 +32,7 @@ module.exports = ({ strapi }) => ({
 
   async latest(query) {
     var result = await strapi.entityService.findMany("api::launcher-version.launcher-version", {
-      sort: [ "id:desc" ],
+      sort: ["id:desc"],
       pagination: { limit: 1 },
       populate: { artifact: { fields: ["url"] } }
     });
@@ -58,7 +58,7 @@ module.exports = ({ strapi }) => ({
 
     var modpackQuery = {
       fields: ["name", "title", "priority"],
-      populate: {versions: { fields: ["version"], sort: ["id:desc"] } }
+      populate: { versions: { fields: ["version"], sort: ["id:desc"] } }
     }
     if (!wantsPreview) {
       var previewFilter = { isPreview: { $eq: false } }
@@ -83,7 +83,7 @@ module.exports = ({ strapi }) => ({
         pkg.iconUrl = iconUrl;
         delete pkg.icon;
       }
-      
+
       delete pkg.versions;
       delete pkg.id;
     });
@@ -97,7 +97,7 @@ module.exports = ({ strapi }) => ({
 
   async packageManifest(name, version) {
     var result = await strapi.entityService.findMany("api::modpack-version.modpack-version", {
-      filters: { $and: [ { modpack: { name: { $eq: name } } }, { version: { $eq: version } } ] },
+      filters: { $and: [{ modpack: { name: { $eq: name } } }, { version: { $eq: version } }] },
       sort: ["id:desc"],
       pagination: { limit: 1 },
       populate: { modpack: { fields: ["name", "title"] } }
@@ -179,8 +179,7 @@ module.exports = ({ strapi }) => ({
   async news(query) {
     var result = await strapi.entityService.findMany("api::launcher.launcher", {});
 
-    if (result.length == 0)
-    {
+    if (result.length == 0) {
       throw new NotFoundError("A launcher has not yet been configured");
     }
 
@@ -191,11 +190,10 @@ module.exports = ({ strapi }) => ({
     var result = await strapi.entityService.findMany("api::modpack.modpack", {
       filters: { name: { $eq: name } },
       pagination: { limit: 1 },
-      populate: [ "domain" ]
+      populate: ["domain"]
     });
 
-    if (result.length == 0)
-    {
+    if (result.length == 0) {
       throw new NotFoundError(`No instances by the name of '${name}' found`);
     }
 

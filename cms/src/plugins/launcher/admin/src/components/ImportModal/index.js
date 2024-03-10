@@ -37,8 +37,7 @@ export const ImportModal = ({ setShowModal, addVersion, versionTable }) => {
     try {
       jsonObj = JSON.parse(modpackJson);
     }
-    catch (e)
-    {
+    catch (e) {
       return "JSON is malformed"
     }
 
@@ -47,21 +46,19 @@ export const ImportModal = ({ setShowModal, addVersion, versionTable }) => {
     }
 
     if (!jsonObj.hasOwnProperty("title")
-        || !jsonObj.hasOwnProperty("name")
-        || !jsonObj.hasOwnProperty("version")
-        || !jsonObj.hasOwnProperty("gameVersion")
-        || !jsonObj.hasOwnProperty("features")
-        || !jsonObj.hasOwnProperty("tasks")
-        || !jsonObj.hasOwnProperty("versionManifest")
-        || !jsonObj.hasOwnProperty("launch")
-      )
-    {
+      || !jsonObj.hasOwnProperty("name")
+      || !jsonObj.hasOwnProperty("version")
+      || !jsonObj.hasOwnProperty("gameVersion")
+      || !jsonObj.hasOwnProperty("features")
+      || !jsonObj.hasOwnProperty("tasks")
+      || !jsonObj.hasOwnProperty("versionManifest")
+      || !jsonObj.hasOwnProperty("launch")
+    ) {
       return "Not a valid version file";
     }
 
     var semver = require('semver');
-    if (!semver.valid(jsonObj.version))
-    {
+    if (!semver.valid(jsonObj.version)) {
       return "'" + jsonObj.version + "' is not a valid semantic version. i.e '1.0.0' or '1.0.0-1.0'"
     }
 
@@ -83,10 +80,10 @@ export const ImportModal = ({ setShowModal, addVersion, versionTable }) => {
 
   return (
     <ModalLayout
-      onClose={ () => setShowModal(false) }
-      labelledBy = "title"
-      as = "form"
-      onSubmit = { handleSubmit }
+      onClose={() => setShowModal(false)}
+      labelledBy="title"
+      as="form"
+      onSubmit={handleSubmit}
     >
       <ModalHeader>
         <Typography fontWeight="bold" textColor="neutral800" as="h2" id="title">
@@ -96,22 +93,22 @@ export const ImportModal = ({ setShowModal, addVersion, versionTable }) => {
 
       <ModalBody>
         <Textarea
-          placeholder = "Paste JSON"
-          label = "<name>.json:"
-          name = "text"
-          error = { getError() }
-          onChange = {(e) => setModpackJson(e.target.value) }
-          value = {modpackJson}
+          placeholder="Paste JSON"
+          label="<name>.json:"
+          name="text"
+          error={getError()}
+          onChange={(e) => setModpackJson(e.target.value)}
+          value={modpackJson}
         />
       </ModalBody>
 
       <ModalFooter
         startActions={
-          <Button onClick = {() => setShowModal(false)} variant="tertiary">
+          <Button onClick={() => setShowModal(false)} variant="tertiary">
             Cancel
           </Button>
         }
-        endActions={ validInput ? ( <Button type="submit">Import</Button> ) : ( <Button type="submit" disabled="true">Import</Button> ) }
+        endActions={validInput ? (<Button type="submit">Import</Button>) : (<Button type="submit" disabled="true">Import</Button>)}
       />
     </ModalLayout>
   );

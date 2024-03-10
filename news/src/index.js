@@ -9,9 +9,9 @@ const minestat = require('minestat');
 console.log("Depot News: starting...");
 
 const client = new Client({
-    intents: Object.keys(GatewayIntentBits).map((a) => {
-        return GatewayIntentBits[a]
-    }),
+  intents: Object.keys(GatewayIntentBits).map((a) => {
+    return GatewayIntentBits[a]
+  }),
 });
 
 const app = express();
@@ -22,12 +22,12 @@ function parseDiscordMessages(messageList) {
   var count = 0;
   messageList.map((message) => {
     count++;
-    
+
     html += toHTML(message.content, {
       discordCallback: {
-        channel: node => `<a href='discord://discord.com/channels/${client.channels.cache.get(node.id).guildId}/${node.id}'>#${client.channels.cache.get(node.id).name}</a>`,
-        user: node => "@" + client.users.cache.get(node.id).name,
-        role: node => "@" + message.guild.roles.cache.get(node.id).name
+        channel: node => `<a href='discord://discord.com/channels/${message.guild.cache.channels.get(node.id).guildId}/${node.id}'>#${message.guild.cache.channels.get(node.id).name}</a>`,
+        user: node => "@" + message.guild.cache.users.get(node.id).name,
+        role: node => "@" + message.guild.cache.roles.get(node.id).name
       }
     });
   });
@@ -43,8 +43,8 @@ async function getServerStatus(address, port) {
   var result;
 
   try {
-    result = await minestat.init({address: address, port: port});
-  } catch(e) {
+    result = await minestat.init({ address: address, port: port });
+  } catch (e) {
     console.log("warning: server status failed");
     console.log(e);
   }
@@ -84,7 +84,7 @@ app.get("/", async (req, res) => {
     html += parseDiscordMessages(changelogMessages);
 
     res.status(200).send(html + htmlFooter);
-  } catch(e) {
+  } catch (e) {
     res.status(500).send(e.data);
     console.log(e);
   }
@@ -112,7 +112,7 @@ app.get("/:id", async (req, res) => {
     html += parseDiscordMessages(changelogMessages);
 
     res.status(200).send(html + htmlFooter);
-  } catch(e) {
+  } catch (e) {
     res.status(500).send(e.data);
     console.log("fatal: API request failed");
     console.log(e);
@@ -124,6 +124,5 @@ client.on("ready", (client) => {
   app.listen(3000);
   console.log("Depot News: ready");
 });
-
 
 client.login(process.env.DISCORD_BOT_TOKEN);

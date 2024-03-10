@@ -41,8 +41,7 @@ const VersionUtils = () => {
     await fetchData();
   }
 
-  function hasVersions()
-  {
+  function hasVersions() {
     var keyList = Object.keys(versionTable);
     for (var i = 0; i < keyList.length; i++) {
       if (versionTable[keyList[i]].length > 0) {
@@ -52,8 +51,7 @@ const VersionUtils = () => {
     return false;
   }
 
-  if (isLoading)
-  {
+  if (isLoading) {
     return <LoadingIndicatorPage />
   }
 
@@ -66,30 +64,30 @@ const VersionUtils = () => {
       />
 
       <ContentLayout>
-        { hasVersions() ?
+        {hasVersions() ?
           (
             <VersionTable
-              versionTable = { versionTable }
-              deleteVersion = { deleteVersion }
-              setShowModal = { setShowModal }
+              versionTable={versionTable}
+              deleteVersion={deleteVersion}
+              setShowModal={setShowModal}
             />
           )
           : <EmptyStateLayout
-              icon = { <Illo /> }
-              content = "There are no modpack versions yet..."
-              action = {
-                <Button
-                  onClick = { () => setShowModal(true) }
-                  variant = "secondary"
-                  startIcon = { <Plus /> }
-                >
-                  Import Modpack Version
-                </Button>
-              }
-            />
+            icon={<Illo />}
+            content="There are no modpack versions yet..."
+            action={
+              <Button
+                onClick={() => setShowModal(true)}
+                variant="secondary"
+                startIcon={<Plus />}
+              >
+                Import Modpack Version
+              </Button>
+            }
+          />
         }
       </ContentLayout>
-      { showModal && <ImportModal setShowModal = { setShowModal } addVersion = { addVersion } versionTable = { versionTable } /> }
+      {showModal && <ImportModal setShowModal={setShowModal} addVersion={addVersion} versionTable={versionTable} />}
     </Layout>
   );
 };

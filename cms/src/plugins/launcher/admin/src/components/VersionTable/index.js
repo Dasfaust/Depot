@@ -26,31 +26,31 @@ export const VersionTable = ({
     for (var j = 0; j < versionTable[keyList[i]].length; j++) {
       var manifest = versionTable[keyList[i]][j];
       rows.push(
-        <Tr key = { manifest.id }>
+        <Tr key={manifest.id}>
           <Td>
-            <Typography textColor = "neutral800">{ manifest.modpack.title }</Typography>
+            <Typography textColor="neutral800">{manifest.modpack.title}</Typography>
           </Td>
 
           <Td>
-              <Typography textColor = "neutral800">{ manifest.version }</Typography>
+            <Typography textColor="neutral800">{manifest.version}</Typography>
           </Td>
 
           <Td>
-            <Typography textColor = "neutral800">{ manifest.gameVersion }</Typography>
+            <Typography textColor="neutral800">{manifest.gameVersion}</Typography>
           </Td>
 
           <Td>
-            <Typography textColor = "neutral800">{ (manifest.isPreview ? "Yes" : "No") }</Typography>
+            <Typography textColor="neutral800">{(manifest.isPreview ? "Yes" : "No")}</Typography>
           </Td>
 
           <Td>
-            <Flex style = { { justifyContent: "end" } }>
+            <Flex style={{ justifyContent: "end" }}>
               <Box>
                 <IconButton
-                  onClick = { () => deleteVersion(manifest.id) }
-                  label = "Delete"
+                  onClick={() => deleteVersion(manifest.id)}
+                  label="Delete"
                   noBorder
-                  icon = { <Trash /> }
+                  icon={<Trash />}
                 />
               </Box>
             </Flex>
@@ -61,47 +61,47 @@ export const VersionTable = ({
   }
   return (
     <Box
-      background = "neutral0"
-      hasRadius = { true }
-      shadow = "filterShadow"
-      padding = {8}
-      style = { { marginTop: "10px" } }
+      background="neutral0"
+      hasRadius={true}
+      shadow="filterShadow"
+      padding={8}
+      style={{ marginTop: "10px" }}
     >
       <Table
-        colCount = { 4 }
-        rowCount = { 10 }
-        footer = {
-          <TFooter onClick={() => setShowModal(true)} icon = { <Plus /> }>
+        colCount={4}
+        rowCount={10}
+        footer={
+          <TFooter onClick={() => setShowModal(true)} icon={<Plus />}>
             Add a version
           </TFooter>
         }
       >
         <Thead>
           <Tr>
-            <Th action = { null }>
+            <Th action={null}>
               <Typography variant="sigma">Title</Typography>
             </Th>
 
-            <Th action = { null }>
+            <Th action={null}>
               <Typography variant="sigma">Latest Version</Typography>
             </Th>
 
-            <Th action = { null }>
+            <Th action={null}>
               <Typography variant="sigma">Game Version</Typography>
             </Th>
 
-            <Th action = { null }>
+            <Th action={null}>
               <Typography variant="sigma">Is Preview</Typography>
             </Th>
 
-            <Th action = { null }>
+            <Th action={null}>
               <VisuallyHidden>Actions</VisuallyHidden>
             </Th>
           </Tr>
         </Thead>
 
         <Tbody>
-          { rows }
+          {rows}
         </Tbody>
       </Table>
     </Box>

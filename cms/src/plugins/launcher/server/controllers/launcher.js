@@ -4,7 +4,7 @@ module.exports = {
   async versionTable(ctx) {
     try {
       return await strapi.plugin("launcher").service("launcher").versionTable(ctx.query);
-    } catch(e) {
+    } catch (e) {
       ctx.throw(500, e)
     }
   },
@@ -12,7 +12,7 @@ module.exports = {
   async latest(ctx) {
     try {
       return await strapi.plugin("launcher").service("launcher").latest(ctx.query);
-    } catch(e) {
+    } catch (e) {
       ctx.throw(500, e)
     }
   },
@@ -20,7 +20,7 @@ module.exports = {
   async packages(ctx) {
     try {
       return await strapi.plugin("launcher").service("launcher").packages(ctx.query);
-    } catch(e) {
+    } catch (e) {
       ctx.throw(500, e)
     }
   },
@@ -28,7 +28,7 @@ module.exports = {
   async packageManifest(ctx) {
     try {
       return await strapi.plugin("launcher").service("launcher").packageManifest(ctx.params.name, ctx.params.version);
-    } catch(e) {
+    } catch (e) {
       ctx.throw(500, e)
     }
   },
@@ -36,7 +36,7 @@ module.exports = {
   async domain(ctx) {
     try {
       return await strapi.plugin("launcher").service("launcher").domain(ctx.params.name);
-    } catch(e) {
+    } catch (e) {
       ctx.throw(500, e)
     }
   },
@@ -44,7 +44,7 @@ module.exports = {
   async create(ctx) {
     try {
       return await strapi.plugin("launcher").service("launcher").create(ctx.request.body);
-    } catch(e) {
+    } catch (e) {
       ctx.throw(500, e)
     }
   },
@@ -52,7 +52,7 @@ module.exports = {
   async delete(ctx) {
     try {
       return await strapi.plugin("launcher").service("launcher").delete(ctx.params.id);
-    } catch(e) {
+    } catch (e) {
       ctx.throw(500, e)
     }
   },
@@ -60,7 +60,7 @@ module.exports = {
   async news(ctx) {
     try {
       return await strapi.plugin("launcher").service("launcher").news(ctx.query);
-    } catch(e) {
+    } catch (e) {
       ctx.throw(500, e)
     }
   },
@@ -68,7 +68,7 @@ module.exports = {
   async packageNews(ctx) {
     try {
       return await strapi.plugin("launcher").service("launcher").packageNews(ctx.params.id);
-    } catch(e) {
+    } catch (e) {
       ctx.throw(500, e)
     }
   },
