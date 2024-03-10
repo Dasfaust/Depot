@@ -8,6 +8,7 @@ Manage modpacks with Strapi. Depot is made for use with [my fork of SKCraft Laun
 - Per-instance server status reporting
 - Per-instance news page generation with Discord integration
 - Per-instance pre-release support
+- Link multiple instances of Depot together
 
 ## Planned
 - One click deployment with Modpack Creator
@@ -21,8 +22,6 @@ Strapi manages all of the content for the launcher and Depot News. The Launcher 
 Depot News is a Discord.js bot; it grabs instance descriptions from Strapi and latest posts from a configured Discord channel and serves it in HTML for the launcher.
 
 A web server will container tie everything together under one domain name. There is an example config file for NGINX [here](depot.conf).
-
-To keep the protocol compatible with the mainline SKCraft Launcher, extra features are placed behind an additional protocol version request.
 
 ## Installation, usage, and setup
 I will create a guide at a later date!
