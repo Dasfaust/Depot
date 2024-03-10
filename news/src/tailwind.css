@@ -1,0 +1,66 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap');
+
+body {
+  @apply mt-1 mx-2 mb-2;
+  font-family: "Inconsolata", monospace;
+  font-optical-sizing: auto;
+  font-variation-settings:
+    "wdth" 100;
+}
+
+h1 {
+  @apply font-bold text-xl;
+}
+
+h2 {
+  @apply font-bold text-lg;
+}
+
+h3 {
+  @apply font-bold text-base;
+}
+
+blockquote {
+  @apply pl-2 border-l-2 border-t-0 border-b-0 border-r-0 border-solid border-gray-400;
+}
+
+ul {
+  @apply pl-2 list-disc;
+}
+
+strong {
+  @apply font-bold;
+}
+
+a {
+  @apply text-blue-400;
+  font-weight: normal;
+}
+
+.welcomeBlock {
+  @apply mb-2;
+}
+
+.messageBlock {
+  @apply mb-2 px-2;
+}
+
+.domainLink {
+  @apply mb-2;
+}
+
+.serverStatusOffline {
+  @apply text-rose-300;
+}
+
+.serverStatusMaintenance {
+  @apply text-amber-300;
+}
+
+.serverStatusOnline {
+  @apply text-emerald-200;
+}

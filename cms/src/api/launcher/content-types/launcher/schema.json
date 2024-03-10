@@ -1,0 +1,51 @@
+{
+  "kind": "singleType",
+  "collectionName": "launchers",
+  "info": {
+    "singularName": "launcher",
+    "pluralName": "launchers",
+    "displayName": "Launcher",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "welcomeScreen": {
+      "type": "blocks",
+      "required": true
+    },
+    "domain": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::domain.domain"
+    },
+    "versions": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::launcher-version.launcher-version"
+    },
+    "discordChangelogChannelId": {
+      "type": "string",
+      "required": true
+    },
+    "minimumVersion": {
+      "type": "integer",
+      "default": 1,
+      "required": true
+    },
+    "objectsLocationOverride": {
+      "type": "string",
+      "required": false
+    },
+    "librariesLocationOverride": {
+      "type": "string",
+      "required": false
+    },
+    "discordAnnouncementsChannelId": {
+      "type": "string",
+      "required": true
+    }
+  }
+}

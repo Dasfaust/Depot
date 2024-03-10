@@ -1,0 +1,84 @@
+{
+  "kind": "collectionType",
+  "collectionName": "modpacks",
+  "info": {
+    "singularName": "modpack",
+    "pluralName": "modpacks",
+    "displayName": "Modpack",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true,
+      "unique": false
+    },
+    "name": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "serverAddress": {
+      "type": "string",
+      "required": true
+    },
+    "description": {
+      "type": "blocks",
+      "required": true
+    },
+    "serverPort": {
+      "type": "integer",
+      "required": true,
+      "default": 25565
+    },
+    "icon": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
+    },
+    "discordChangelogChannelId": {
+      "type": "string",
+      "required": true
+    },
+    "domain": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::domain.domain",
+      "inversedBy": "modpacks"
+    },
+    "priority": {
+      "type": "integer",
+      "required": true,
+      "default": 1
+    },
+    "discordChatChannelId": {
+      "type": "string",
+      "required": true
+    },
+    "discordInfoChannelId": {
+      "type": "string",
+      "required": true
+    },
+    "versions": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::modpack-version.modpack-version",
+      "mappedBy": "modpack"
+    },
+    "isPreview": {
+      "type": "boolean",
+      "default": false,
+      "required": true
+    }
+  }
+}

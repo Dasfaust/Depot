@@ -1,0 +1,35 @@
+{
+  "name": "depot-cms",
+  "private": true,
+  "version": "0.1.0",
+  "description": "A backend for SKCraft Launcher",
+  "scripts": {
+    "develop": "strapi develop",
+    "start": "strapi start",
+    "build": "strapi build",
+    "strapi": "strapi"
+  },
+  "dependencies": {
+    "@strapi/plugin-cloud": "4.20.3",
+    "@strapi/plugin-i18n": "4.20.3",
+    "@strapi/plugin-users-permissions": "4.20.3",
+    "@strapi/strapi": "4.20.3",
+    "better-sqlite3": "8.6.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "react-router-dom": "5.3.4",
+    "semver": "^7.6.0",
+    "styled-components": "5.3.3"
+  },
+  "author": {
+    "name": "Dasfaust"
+  },
+  "strapi": {
+    "uuid": "57b218a0-54a1-4cb9-a275-046b2a5fbb68"
+  },
+  "engines": {
+    "node": ">=18.0.0 <=20.x.x",
+    "npm": ">=6.0.0"
+  },
+  "license": "MIT"
+}

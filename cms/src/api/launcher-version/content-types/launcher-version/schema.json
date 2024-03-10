@@ -1,0 +1,29 @@
+{
+  "kind": "collectionType",
+  "collectionName": "launcher_versions",
+  "info": {
+    "singularName": "launcher-version",
+    "pluralName": "launcher-versions",
+    "displayName": "Launcher Version",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "version": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "artifact": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": [
+        "files"
+      ]
+    }
+  }
+}

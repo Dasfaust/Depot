@@ -1,0 +1,11 @@
+*
+!.strapi
+!config
+!database
+!public
+!src
+!types
+!.env
+!favicon.png
+!jsconfig.json
+!package.json

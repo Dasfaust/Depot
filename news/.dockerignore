@@ -1,0 +1,6 @@
+*
+!public
+!src
+!.env
+!package.json
+!postcss.config.js

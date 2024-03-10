@@ -1,0 +1,74 @@
+{
+  "kind": "collectionType",
+  "collectionName": "modpack_versions",
+  "info": {
+    "singularName": "modpack-version",
+    "pluralName": "modpack-versions",
+    "displayName": "Modpack Version",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "features": {
+      "type": "json"
+    },
+    "tasks": {
+      "type": "json"
+    },
+    "versionManifest": {
+      "type": "json"
+    },
+    "loaders": {
+      "type": "json"
+    },
+    "launch": {
+      "type": "json"
+    },
+    "gameVersion": {
+      "type": "string",
+      "required": true
+    },
+    "minimumVersion": {
+      "type": "integer",
+      "required": true,
+      "default": 3
+    },
+    "isPreview": {
+      "type": "boolean",
+      "required": true,
+      "default": false
+    },
+    "version": {
+      "type": "string",
+      "required": true,
+      "unique": true
+    },
+    "defaultHeapAllocation": {
+      "type": "integer",
+      "required": true,
+      "min": 1
+    },
+    "modpack": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::modpack.modpack",
+      "inversedBy": "versions"
+    },
+    "librariesLocation": {
+      "type": "string",
+      "required": true,
+      "default": "repo/libraries"
+    },
+    "objectsLocation": {
+      "type": "string",
+      "default": "repo/objects",
+      "required": true
+    },
+    "defaultJVMArguments": {
+      "type": "text"
+    }
+  }
+}

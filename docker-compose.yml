@@ -1,0 +1,26 @@
+version: "3"
+
+services:
+    cms:
+        tty: true
+        stdin_open: true
+        build: ./cms/.
+        restart: unless-stopped
+        env_file: ./cms/.env
+        volumes:
+            - ./cms/.tmp:/.tmp
+            - ./cms/public:/public
+        networks:
+            - network
+    news:
+        tty: true
+        stdin_open: true
+        build: ./news/.
+        restart: unless-stopped
+        env_file: ./news/.env
+        networks:
+            - network
+
+networks:
+    network:
+        driver: bridge
