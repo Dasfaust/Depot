@@ -27,7 +27,7 @@ function parseDiscordMessages(messageList) {
       discordCallback: {
         channel: node => `<a href='discord://discord.com/channels/${message.guild.channels.cache.get(node.id).guildId}/${node.id}'>#${message.guild.channels.cache.get(node.id).name}</a>`,
         user: node => "@" + message.guild.members.cache.get(node.id).username,
-        role: node => "@" + message.guild.roles.cahce.get(node.id).name
+        role: node => "@" + message.guild.roles.cache.get(node.id).name
       }
     });
   });

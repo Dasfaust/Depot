@@ -4,6 +4,8 @@ const axios = require("axios");
 const { errors } = require('@strapi/utils');
 const { NotFoundError } = errors;
 
+axios.defaults.timeout = 5000;
+
 module.exports = ({ strapi }) => ({
   async versionTable(query) {
     var modpackQuery = await strapi.entityService.findMany("api::modpack.modpack", {
