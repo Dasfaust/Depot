@@ -16,20 +16,22 @@ const client = new Client({
 
 const app = express();
 
-function parseDiscordMessages(messageList) {
+function parseDiscordMessages(messageList, maxMessages = -1) {
   var html = "<div class='messageBlock'>";
 
   var count = 0;
   messageList.map((message) => {
-    count++;
+    if (count < Math.max(maxMessages, messageList.size)) {
+      html += toHTML(message.content, {
+        discordCallback: {
+          channel: node => `<a href='discord://discord.com/channels/${message.guild.channels.cache.get(node.id).guildId}/${node.id}'>#${message.guild.channels.cache.get(node.id).name}</a>`,
+          user: node => "@" + message.guild.members.cache.get(node.id).username,
+          role: node => "@" + message.guild.roles.cache.get(node.id).name
+        }
+      });
+    }
 
-    html += toHTML(message.content, {
-      discordCallback: {
-        channel: node => `<a href='discord://discord.com/channels/${message.guild.channels.cache.get(node.id).guildId}/${node.id}'>#${message.guild.channels.cache.get(node.id).name}</a>`,
-        user: node => "@" + message.guild.members.cache.get(node.id).username,
-        role: node => "@" + message.guild.roles.cache.get(node.id).name
-      }
-    });
+    count++;
   });
 
   if (count == 0) {
@@ -96,7 +98,7 @@ app.get("/:id", async (req, res) => {
     const changelogChannel = client.channels.cache.get(result.data.discordChangelogChannelId);
     const changelogMessages = await changelogChannel.messages.fetch({ limit: 1 });
     const chatChannel = client.channels.cache.get(result.data.discordChatChannelId);
-    const pinnedMessages = await chatChannel.messages.fetchPinned({ limit: 1 });
+    const pinnedMessages = await chatChannel.messages.fetchPinned();
 
     var html = loadHeader(html + htmlFooter);
     var infoChannelName = client.channels.cache.get(result.data.discordInfoChannelId).name;
@@ -106,7 +108,7 @@ app.get("/:id", async (req, res) => {
     html += welcome + "</div>";
 
     html += `<div class='messageBlockHeader'><a href='discord://discord.com/channels/${changelogChannel.guildId}/${result.data.discordChatChannelId}'>#${chatChannel.name}: 📌</a></div>`;
-    html += parseDiscordMessages(pinnedMessages);
+    html += parseDiscordMessages(pinnedMessages, 1);
 
     html += `<div class='messageBlockHeader'><a href='discord://discord.com/channels/${changelogChannel.guildId}/${result.data.discordChangelogChannelId}'>#${changelogChannel.name}</a></div>`;
     html += parseDiscordMessages(changelogMessages);
