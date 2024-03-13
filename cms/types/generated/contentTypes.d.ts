@@ -884,6 +884,7 @@ export interface ApiLauncherVersionLauncherVersion
   attributes: {
     version: Attribute.String & Attribute.Required & Attribute.Unique;
     artifact: Attribute.Media & Attribute.Required;
+    isPreview: Attribute.Boolean & Attribute.DefaultTo<false>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

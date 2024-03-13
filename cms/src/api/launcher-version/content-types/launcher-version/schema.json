@@ -24,6 +24,10 @@
       "allowedTypes": [
         "files"
       ]
+    },
+    "isPreview": {
+      "type": "boolean",
+      "default": false
     }
   }
 }

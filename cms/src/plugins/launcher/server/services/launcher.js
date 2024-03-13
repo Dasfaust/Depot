@@ -34,11 +34,19 @@ module.exports = ({ strapi }) => ({
   },
 
   async latest(query) {
-    var result = await strapi.entityService.findMany("api::launcher-version.launcher-version", {
+    var wantsPreview = (("key" in query && query.key.toLowerCase() == "preview") ? true : false);
+
+    var launcherVersionQuery = {
       sort: ["id:desc"],
       pagination: { limit: 1 },
       populate: { artifact: { fields: ["url"] } }
-    });
+    }
+
+    if (!wantsPreview) {
+      launcherVersionQuery.filters = { isPreview: { $eq: false } }
+    }
+
+    var result = await strapi.entityService.findMany("api::launcher-version.launcher-version", launcherVersionQuery);
 
     return { version: result[0].version, url: process.env.BASE_URL + result[0].artifact.url };
   },
