@@ -72,7 +72,7 @@ module.exports = ({ strapi }) => ({
     result.packages = await strapi.entityService.findMany("api::modpack.modpack", modpackQuery);
 
     result.packages.map((pkg) => {
-      if ("versions" in pkg && pkg.versions.length > 0 && !("error" in pkg.versions[0])) {
+      if ("versions" in pkg && pkg.versions.length > 0) {
         pkg.version = pkg.versions[0].version;
 
         if (pkg.isPreview || pkg.versions[0].isPreview) {
@@ -81,11 +81,14 @@ module.exports = ({ strapi }) => ({
         delete pkg.isPreview;
 
         pkg.location = `/launcher/packages/${pkg.name}/${pkg.version}`;
-        pkg.domainName = pkg.domain.name;
-        delete pkg.domain;
-        pkg.newsUrl = `${process.env.NEWS_URL}/${pkg.name}`;
+      } else {
+        pkg.location = `/launcher/packages/${pkg.name}/no-versions-found`;
+        pkg.version = "no-versions-found";
       }
 
+      pkg.domainName = pkg.domain.name;
+      delete pkg.domain;
+      pkg.newsUrl = `${process.env.NEWS_URL}/${pkg.name}`;
       var iconUrl = process.env.BASE_URL + pkg.icon.url;
       pkg.iconUrl = iconUrl;
       delete pkg.icon;
