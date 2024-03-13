@@ -59,9 +59,10 @@ module.exports = ({ strapi }) => ({
     var wantsPreview = (("key" in query && query.key.toLowerCase() == "preview") ? true : false);
 
     var modpackQuery = {
-      fields: ["name", "title", "priority"],
-      populate: { icon: {}, domain: {}, versions: { fields: ["version"], sort: ["id:desc"] } }
+      fields: ["name", "title", "priority", "isPreview"],
+      populate: { icon: {}, domain: {}, versions: { fields: ["version", "isPreview"], sort: ["id:desc"] } }
     }
+
     if (!wantsPreview) {
       var previewFilter = { isPreview: { $eq: false } }
       modpackQuery.filters = previewFilter;
@@ -71,8 +72,14 @@ module.exports = ({ strapi }) => ({
     result.packages = await strapi.entityService.findMany("api::modpack.modpack", modpackQuery);
 
     result.packages.map((pkg) => {
-      if ("versions" in pkg) {
+      if ("versions" in pkg && pkg.versions.length > 0 && !("error" in pkg.versions[0])) {
         pkg.version = pkg.versions[0].version;
+
+        if (pkg.isPreview || pkg.versions[0].isPreview) {
+          pkg.version = pkg.version + "-preview";
+        }
+        delete pkg.isPreview;
+
         pkg.location = `/launcher/packages/${pkg.name}/${pkg.version}`;
         pkg.domainName = pkg.domain.name;
         delete pkg.domain;
@@ -82,7 +89,7 @@ module.exports = ({ strapi }) => ({
       var iconUrl = process.env.BASE_URL + pkg.icon.url;
       pkg.iconUrl = iconUrl;
       delete pkg.icon;
-
+      delete pkg.isPreview;
       delete pkg.versions;
       delete pkg.id;
     });
@@ -99,7 +106,7 @@ module.exports = ({ strapi }) => ({
           pkg.location = `${domain.depotUrl}${pkg.location}`;
           result.packages.push(pkg);
         });
-      } catch(axError) {
+      } catch (axError) {
         console.log(`Error getting packages from domain ${domain.name}:`);
         console.log(axError);
       }
@@ -113,6 +120,10 @@ module.exports = ({ strapi }) => ({
   },
 
   async packageManifest(name, version) {
+    if (version.includes("-preview")) {
+      version = version.replace("-preview", "");
+    }
+
     var result = await strapi.entityService.findMany("api::modpack-version.modpack-version", {
       filters: { $and: [{ modpack: { name: { $eq: name } } }, { version: { $eq: version } }] },
       sort: ["id:desc"],
