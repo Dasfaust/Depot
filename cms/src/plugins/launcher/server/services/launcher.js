@@ -78,7 +78,6 @@ module.exports = ({ strapi }) => ({
         if (pkg.isPreview || pkg.versions[0].isPreview) {
           pkg.version = pkg.version + "-preview";
         }
-        delete pkg.isPreview;
 
         pkg.location = `/launcher/packages/${pkg.name}/${pkg.version}`;
       } else {
@@ -86,11 +85,11 @@ module.exports = ({ strapi }) => ({
         pkg.version = "no-versions-found";
       }
 
+      delete pkg.isPreview;
       pkg.domainName = pkg.domain.name;
       delete pkg.domain;
       pkg.newsUrl = `${process.env.NEWS_URL}/${pkg.name}`;
-      var iconUrl = process.env.BASE_URL + pkg.icon.url;
-      pkg.iconUrl = iconUrl;
+      pkg.iconUrl = process.env.BASE_URL + pkg.icon.url;
       delete pkg.icon;
       delete pkg.isPreview;
       delete pkg.versions;
