@@ -69,12 +69,10 @@ module.exports = ({ strapi }) => ({
       modpackQuery.populate.versions.filters = previewFilter;
     }
 
-    result.packages = await strapi.entityService.findMany("api::modpack.modpack", modpackQuery);
-
-    var missingVersions = [];
-    var index = 0;
-    result.packages.map((pkg) => {
-      if ("versions" in pkg && pkg.versions.length > 0) {
+    result.packages = [];
+    var instances = await strapi.entityService.findMany("api::modpack.modpack", modpackQuery);
+    instances.map((pkg) => {
+      if ("versions" in pkg && pkg.versions.length > 0 && !("error" in pkg.versions[0])) {
         pkg.version = pkg.versions[0].version;
 
         if (pkg.isPreview || pkg.versions[0].isPreview) {
@@ -85,23 +83,17 @@ module.exports = ({ strapi }) => ({
         pkg.domainName = pkg.domain.name;
         pkg.newsUrl = `${process.env.NEWS_URL}/${pkg.name}`;
         pkg.iconUrl = process.env.BASE_URL + pkg.icon.url;
-        
+
         delete pkg.isPreview;
         delete pkg.domain;
         delete pkg.icon;
         delete pkg.isPreview;
         delete pkg.versions;
         delete pkg.id;
-      } else {
-        missingVersions.push(index);
+
+        result.packages.push(pkg)
       }
-
-      index++;
     });
-
-    for (var i in missingVersions) {
-      delete result.packages[i];
-    }
 
     var domains = await strapi.entityService.findMany("api::domain.domain", {
       filters: { depotUrl: { $ne: process.env.BASE_URL } }
